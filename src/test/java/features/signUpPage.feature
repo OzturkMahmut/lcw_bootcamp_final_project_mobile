@@ -25,3 +25,23 @@ Feature: Sign Up Page
     Examples:
       | welcomeText | loginFormTitle | signUpFormTitle |
       | Hoş geldin    | GİRİŞ YAP      |    ÜYE OL       |
+
+
+  @SignUp @FillOutForm
+  Scenario Outline: New User Registration
+    Given User opens LcWaikiki App
+    When  User clicks "Skip Button" element in tutorial page
+    Then  User should see "<welcomeText>" text in "Welcome Header" element in homepage
+    When  User clicks "Profile" bottom navigation button
+    Then  User should see "<loginFormTitle>" text in "Login Form Title" element in login page
+    When  User clicks "Sign Up Button" element in login page
+    Then  User should see "<signUpFormTitle>" text in "Sign Up Form Title" element in sign-up page
+    When  User fills out the "Email" input container with  "<emailInput>" in sign up page
+    When  User fills out the "Password" input container with  "<passwordInput>" in sign up page
+    When  User fills out the "Phone Number" input container with  "<phoneNumberInput>" in sign up page
+    When  User checks "Terms of Use" checkbox in sign-up page
+    When  User clicks  "Sign Up Button" element in sign-up page
+    Then  User should see "Phone Confirmation Pop Up" element in sign-up page
+    Examples:
+      | welcomeText | loginFormTitle | signUpFormTitle | emailInput           |passwordInput |phoneNumberInput  |
+      | Hoş geldin  |    GİRİŞ YAP   |      ÜYE OL     | seday30647@gmail.com |12345678a      |5234567890       |
