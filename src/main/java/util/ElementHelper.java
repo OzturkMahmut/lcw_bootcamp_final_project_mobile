@@ -22,12 +22,16 @@ public class ElementHelper {
     AppiumDriver driver;
     WebDriverWait wait;
     Actions action;
-    TouchAction touchAction ;
+    TouchAction touchAction;
+    // TouchActions touchActions ;
+
     public ElementHelper(AppiumDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 10);
         this.action = new Actions(driver);
         this.touchAction = new TouchAction(driver);
+        //this.touchActions = new TouchActions(driver);
+
     }
 
     /**
@@ -35,11 +39,24 @@ public class ElementHelper {
      * @return
      */
     public WebElement findElement(By key) {
-        WebElement element = presenceElement(key);
-        action.moveToElement(element);
-        swipe(Direction.DOWN);
-        //scrollToElement(element);
-        //touchAction.press(new PointOption()).moveTo(element).release();
+        WebElement element = null;
+        boolean endOfPage = false;
+        String previousPageSource = driver.getPageSource();
+        // Algorithm to scroll to element
+        while (!endOfPage) {//if we hit the end of the page, page source stays the same,thus algorithm stops
+            // could be an issue for pages with infinite lists
+            try {
+                element = presenceElement(key);
+                break;
+
+            } catch (Exception e) {//if element is not found on the screen, we scroll
+                System.out.println(e);
+                swipe(Direction.UP);
+            }
+            //refresh the page source to compare
+            endOfPage = previousPageSource.equals(driver.getPageSource());
+            previousPageSource = driver.getPageSource();
+        }
         return element;
     }
 
@@ -48,8 +65,24 @@ public class ElementHelper {
      * @return
      */
     public List<WebElement> findElements(By key) {
-        List<WebElement> elements = presenceElements(key);
-        //scrollToElement(elements.get(0));
+        List<WebElement> elements = null;
+        boolean endOfPage = false;
+        String previousPageSource = driver.getPageSource();
+        // Algorithm to scroll to element
+        while (!endOfPage) {//if we hit the end of the page, page source stays the same,thus algorithm stops
+            // could be an issue for pages with infinite lists
+            try {
+                elements = presenceElements(key);
+                break;
+
+            } catch (Exception e) {//if element is not found on the screen, we scroll
+                System.out.println(e);
+                swipe(Direction.UP);
+            }
+            //refresh the page source to compare
+            endOfPage = previousPageSource.equals(driver.getPageSource());
+            previousPageSource = driver.getPageSource();
+        }
         return elements;
     }
 
@@ -93,7 +126,6 @@ public class ElementHelper {
     }
 
     /**
-     *
      * @param key
      */
     public void checkElementPresence(By key) {
@@ -177,6 +209,17 @@ public class ElementHelper {
         Assert.assertEquals(true, find);
     }
 
+    public boolean checkElementTextContains(By selector, String text) {
+        boolean isFound = false;
+        WebElement element = findElement(selector);
+        if (element.getText().contains(text)) {
+            isFound = true;
+        }
+        Assert.assertEquals(true, isFound);
+        return isFound;
+    }
+
+
     /**
      * @param key
      * @return
@@ -193,18 +236,7 @@ public class ElementHelper {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(key));
     }
 
-    /**
-     * @param element
-     */
-    public void scrollToElement(WebElement element) {
-        String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
-                + "var elementTop = arguments[0].getBoundingClientRect().top;"
-                + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
-        ((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
-
-    }
-
-    public void swipe(Direction dir){
+    public void swipe(Direction dir) {
         System.out.println("swipeScreen(): dir: '" + dir + "'"); // always log your actions
 
         // Animation default time:
@@ -215,7 +247,7 @@ public class ElementHelper {
 
         final int PRESS_TIME = 200; // ms
 
-        int edgeBorder = 10; // better avoid edges
+        int edgeBorder = 10; // better to avoid edges
         PointOption pointOptionStart, pointOptionEnd;
 
         // init screen variables
@@ -245,15 +277,12 @@ public class ElementHelper {
         try {
             new TouchAction(driver)
                     .press(pointOptionStart).waitAction()
-                    // a bit more reliable when we add small wait
-                   // .waitAction(WaitOptions.waitOptions(Duration.ofMillis(PRESS_TIME)))
                     .moveTo(pointOptionEnd)
                     .release().perform();
         } catch (Exception e) {
             System.err.println("swipeScreen(): TouchAction FAILED\n" + e.getMessage());
             return;
         }
-
         // always allow swipe action to complete
         try {
             Thread.sleep(ANIMATION_TIME);

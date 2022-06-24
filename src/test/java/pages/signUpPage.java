@@ -36,7 +36,10 @@ public class signUpPage {
     By clarificationText = By.id("com.lcwaikiki.android:id/privacy_policy_info");
     By loginButton= By.id("com.lcwaikiki.android:id/loginNow");
     By signUpButton= By.id("com.lcwaikiki.android:id/buttonRegister");
-    By phoneConfirmationPopUp= By.id("com.lcwaikiki.android:id/buttonRegster");
+    By phoneConfirmationPopUpTitle= By.id("com.lcwaikiki.android:id/dialogTitleText");
+    By phoneConfirmationDesc= By.id("com.lcwaikiki.android:id/dialogDescription");
+    By confirmCodeInputArea= By.id("com.lcwaikiki.android:id/activationCode");
+    By completeSignUpButton= By.id("com.lcwaikiki.android:id/completeButton");
 
 
     AppiumDriver driver;
@@ -53,6 +56,10 @@ public class signUpPage {
     public void checkElementText(String text, String elementName) {
         if ("Sign Up Form Title".equals(elementName)) {
             elementHelper.checkElementWithText(signUpFormTitle, text);
+        }else if ("Phone Confirmation Pop Up".equals(elementName)) {
+            elementHelper.checkElementWithText(phoneConfirmationPopUpTitle, text);
+        }else if ("Phone Confirmation Pop Up Description".equals(elementName)) {
+            elementHelper.checkElementTextContains(phoneConfirmationDesc, text);
         }
     }
 
@@ -81,8 +88,8 @@ public class signUpPage {
             elementHelper.checkElementPresence(signUpButton);
         } else if ("Login Button".equals(elementName)) {
             elementHelper.checkElementPresence(loginButton);
-        }else if ("Phone Confirmation Pop Up".equals(elementName)) {
-            elementHelper.checkElementPresence(loginButton);
+        }else if ("Complete Sign Up Button".equals(elementName)) {
+            elementHelper.checkElementPresence(completeSignUpButton);
         }
     }
 

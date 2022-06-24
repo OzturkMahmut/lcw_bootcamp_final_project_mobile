@@ -41,7 +41,9 @@ Feature: Sign Up Page
     When  User fills out the "Phone Number" input container with  "<phoneNumberInput>" in sign up page
     When  User checks "Terms of Use" checkbox in sign-up page
     When  User clicks  "Sign Up Button" element in sign-up page
-    Then  User should see "Phone Confirmation Pop Up" element in sign-up page
+    Then  User should see "<popUpTitle>" text in "Phone Confirmation Pop Up" element in sign-up page
+    Then  User should see "<phoneNumberInput>" text in "Phone Confirmation Pop Up Description" element in sign-up page
+    Then  User should see "Complete Sign Up Button" element in sign-up page
     Examples:
-      | welcomeText | loginFormTitle | signUpFormTitle | emailInput           |passwordInput |phoneNumberInput  |
-      | Hoş geldin  |    GİRİŞ YAP   |      ÜYE OL     | seday30647@gmail.com |12345678a      |5234567890       |
+      | welcomeText | loginFormTitle | signUpFormTitle | emailInput           |passwordInput |phoneNumberInput  |popUpTitle|
+      | Hoş geldin  |    GİRİŞ YAP   |      ÜYE OL     | seday30647@gmail.com |12345678a      |5234567890       |TELEFON DOĞRULAMA KODU|
