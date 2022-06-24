@@ -25,11 +25,14 @@ public class loginPageSteps {
 
 
     @Then("User should see {string} element in login page")
-    public void userShouldSeeElementInLoginPage(String elementName) {
+    public void shouldSeeElement(String elementName) {
         loginPage.checkElement(elementName);
 
     }
 
 
-
+    @When("User fills out the {string} input container with  {string} in login page")
+    public void fillOutInputContainer(String inputContainer, String input) {
+        loginPage.fillOutInputContainer(inputContainer,input);
+    }
 }

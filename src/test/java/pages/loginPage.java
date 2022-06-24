@@ -72,7 +72,7 @@ public class loginPage {
         }
     }
 
-    public void clickElement(String elementName) {
+    public void clickElement(String elementName)  {
         if ("Sign Up Button".equals(elementName)) {
             elementHelper.click(signupButton);
         } else if ("Login Button".equals(elementName)) {
@@ -81,6 +81,16 @@ public class loginPage {
             elementHelper.click(emailRadioButton);
         }else if ("Phone Radio Button".equals(elementName)) {
             elementHelper.click(phoneRadioButton);
+        }
+    }
+
+    public void fillOutInputContainer(String inputContainer, String input) {
+        if ("Email".equals(inputContainer)) {
+            elementHelper.sendKey(emailInputContainer,input);
+        } else if ("Password".equals(inputContainer)) {
+            elementHelper.sendKey(passwordInputContainer,input);
+        }else if ("Phone Number".equals(inputContainer)) {
+            elementHelper.sendKey(phoneInputContainer,input);
         }
     }
 }
