@@ -23,4 +23,11 @@ public class productListPageSteps {
     public void filterProductBy(String filterType, String filterValue) {
         productListPage.filterProductBy(filterType,filterValue);
     }
+
+    @When("User clicks the {int}. item in the product list")
+    public void clickNthItemInTheProductList(int index) {
+        productListPage.clickElementInProductListWithIndex(index-1);
+    }
+
+
 }

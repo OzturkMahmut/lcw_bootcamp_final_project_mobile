@@ -9,7 +9,7 @@ import util.ElementHelper;
 public class productListPage {
 
     By pageTitle = By.id("com.lcwaikiki.android:id/toolbarTitle");
-    By productList = By.id("com.lcwaikiki.android:id/recyclerProduct");
+    By productList = new MobileBy.ByAndroidUIAutomator("resourceId(\"com.lcwaikiki.android:id/productImage\")");
     By filterButton = By.id("com.lcwaikiki.android:id/filter_product");
     By filterPageTitle = By.id("com.lcwaikiki.android:id/toolbarTitle");
     //TODO: bu bylar colora göre genel bir by al childselector kullanarak
@@ -48,5 +48,9 @@ public class productListPage {
         elementHelper.clickElementInScrollableListWithText(subFilterList,filterValue);
         elementHelper.click(subFilterApplyButton);
         elementHelper.click(filterApplyButton);
+    }
+
+    public void clickElementInProductListWithIndex(int index) {
+        elementHelper.findElements(productList).get(index).click();
     }
 }
