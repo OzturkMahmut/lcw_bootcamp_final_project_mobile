@@ -88,6 +88,54 @@ public class ElementHelper {
 
     /**
      * @param key
+     * @return
+     */
+    public WebElement findElementInScrollableListWithText(By key,String text) {
+        List<WebElement> elements = null;
+        WebElement desElement = null;
+        boolean endOfPage = false;
+        boolean isFound = false;
+        String previousPageSource = driver.getPageSource();
+        // Algorithm to scroll to element
+        while (!endOfPage&&!isFound) {//if we hit the end of the page, page source stays the same,thus algorithm stops
+            // could be an issue for pages with infinite lists
+            try {
+                elements = presenceElements(key);
+                for (WebElement element : elements) {
+                    System.out.println(element.getText());
+                    if (element.getText().contains(text)) {
+                        desElement = element;
+                        isFound = true;
+                        break;
+                    }
+                }
+                //break;
+
+            } catch (Exception e) {//if element is not found on the screen, we scroll
+                System.out.println(e);
+            }
+            if (!isFound){
+                swipe(Direction.UP);
+            }
+
+            //refresh the page source to compare
+            endOfPage = previousPageSource.equals(driver.getPageSource());
+            previousPageSource = driver.getPageSource();
+        }
+        return desElement;
+    }
+
+
+    /**
+     * @param key
+     * @return
+     */
+    public void clickElementInScrollableListWithText(By key,String text) {
+        findElementInScrollableListWithText(key,text).click();
+    }
+
+    /**
+     * @param key
      */
     public void click(By key) {
         findElement(key).click();
@@ -165,7 +213,9 @@ public class ElementHelper {
     public void clickElementWithText(By key, String text) {
         boolean find = false;
         List<WebElement> elements = findElements(key);
+
         for (WebElement element : elements) {
+            System.out.println(element.getText());
             if (element.getText().contains(text)) {
                 element.click();
                 find = true;
@@ -261,7 +311,7 @@ public class ElementHelper {
                 pointOptionEnd = PointOption.point(dims.width / 2, dims.height - edgeBorder);
                 break;
             case UP: // center of header
-                pointOptionEnd = PointOption.point(dims.width / 2, edgeBorder);
+                pointOptionEnd = PointOption.point(dims.width / 2, edgeBorder/2);
                 break;
             case LEFT: // center of left side
                 pointOptionEnd = PointOption.point(edgeBorder, dims.height / 2);
@@ -277,7 +327,7 @@ public class ElementHelper {
         try {
             new TouchAction(driver)
                     .press(pointOptionStart).waitAction()
-                    .moveTo(pointOptionEnd)
+                        .moveTo(pointOptionEnd)
                     .release().perform();
         } catch (Exception e) {
             System.err.println("swipeScreen(): TouchAction FAILED\n" + e.getMessage());

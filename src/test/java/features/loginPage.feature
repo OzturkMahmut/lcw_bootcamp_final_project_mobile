@@ -1,34 +1,47 @@
 @LoginPage
 Feature: Login Page
 
-  @Skip
-  Scenario Outline: Click Skip Button
-    Given User opened LcWaikiki App
-    When click Skip button
-    Then should see Welcome Header "<title>"
+  @Login @CheckComponents @Email
+  Scenario Outline: Check Email Components
+    Given User opens LcWaikiki App
+    When  User clicks "Skip Button" element in tutorial page
+    Then  User should see "<welcomeText>" text in "Welcome Header" element in homepage
+    When  User clicks "Profile" bottom navigation button
+    When  User clicks "Email Radio Button" element in login page
+    Then  User should see "<loginFormTitle>" text in "Login Form Title" element in login page
+    Then  User should see "Email Radio Button" element in login page
+    Then  User should see "Phone Radio Button" element in login page
+    Then  User should see "Email Input Container" element in login page
+    Then  User should see "Password Input Container" element in login page
+    Then  User should see "<emailPlaceholder>" text in "Email Input Container" element in login page
+    Then  User should see "<passwordPlaceholder>" text in "Password Input Container" element in login page
+    Then  User should see "Show Password Icon" element in login page
+    Then  User should see "Forgot Password Link" element in login page
+    Then  User should see "Login Button" element in login page
+    Then  User should see "Sign Up Button" element in login page
     Examples:
-      | title      |
-      | Hoş Geldin |
+      | welcomeText |  loginFormTitle  | emailPlaceholder   | passwordPlaceholder  |
+      | Hoş geldin  |  GİRİŞ YAP       | E-Posta Adresiniz  | Şifreniz             |
 
 
-  @FalseLogin @EmptyLogin
-  Scenario Outline: False Login
-    Given User opened LcWaikiki App
-    When click Skip button
-    Then should see Welcome Header "<title>"
-    When click Profile
-    Then should see "email" input form
-    Then should see "password" input form
-    Then should see login button
-    Then should see signup button
-    Then should see form title
-    When click login button
-    Then should see "<error>"
-    When click "email" input form
-    When click "password" input form
-    When click login button
-    Then should see "<emailError>" email error
-    Then should see "<passwordError>" password error
+  @Login @CheckComponents @Phone
+  Scenario Outline: Check Phone Components
+    Given User opens LcWaikiki App
+    When  User clicks "Skip Button" element in tutorial page
+    Then  User should see "<welcomeText>" text in "Welcome Header" element in homepage
+    When  User clicks "Profile" bottom navigation button
+    When  User clicks "Phone Radio Button" element in login page
+    Then  User should see "<loginFormTitle>" text in "Login Form Title" element in login page
+    Then  User should see "Email Radio Button" element in login page
+    Then  User should see "Phone Radio Button" element in login page
+    Then  User should see "Phone Number Input Container" element in login page
+    Then  User should see "Password Input Container" element in login page
+    Then  User should see "<emailPlaceholder>" text in "Email Input Container" element in login page
+    Then  User should see "<passwordPlaceholder>" text in "Password Input Container" element in login page
+    Then  User should see "Show Password Icon" element in login page
+    Then  User should see "Forgot Password Link" element in login page
+    Then  User should see "Login Button" element in login page
+    Then  User should see "Sign Up Button" element in login page
     Examples:
-      | title      | error       |emailError       |passwordError       |
-      | Hoş geldin |   E-posta adresinizi ya da şifrenizi kontrol ediniz    |Lütfen geçerli bir e-posta adresi giriniz.|Lütfen şifre giriniz.    |
+      | welcomeText |  loginFormTitle  | emailPlaceholder   | passwordPlaceholder  |
+      | Hoş geldin  |  GİRİŞ YAP       | E-Posta Adresiniz  | Şifreniz             |

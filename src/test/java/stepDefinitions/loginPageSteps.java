@@ -24,4 +24,11 @@ public class loginPageSteps {
     }
 
 
+    @Then("User should see {string} element in login page")
+    public void userShouldSeeElementInLoginPage(String elementName) {
+        loginPage.checkElement(elementName);
+
+    }
+
+
 }

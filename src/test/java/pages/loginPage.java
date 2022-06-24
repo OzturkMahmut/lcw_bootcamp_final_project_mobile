@@ -56,11 +56,31 @@ public class loginPage {
         }
     }
 
+    public void checkElement(String elementName) {
+        if ("Email Input Container".equals(elementName)) {
+            elementHelper.checkElementPresence(emailInputContainer);
+        } else if ("Password Input Container".equals(elementName)) {
+            elementHelper.checkElementPresence(passwordInputContainer);
+        } else if ("Show Password Icon".equals(elementName)) {
+            elementHelper.checkElementPresence(showPasswordIcon);
+        } else if ("Phone Number Input Container".equals(elementName)) {
+            elementHelper.checkElementPresence(phoneInputContainer);
+        } else if ("Sign Up Button".equals(elementName)) {
+            elementHelper.checkElementPresence(signupButton);
+        } else if ("Login Button".equals(elementName)) {
+            elementHelper.checkElementPresence(loginButton);
+        }
+    }
+
     public void clickElement(String elementName) {
         if ("Sign Up Button".equals(elementName)) {
             elementHelper.click(signupButton);
         } else if ("Login Button".equals(elementName)) {
             elementHelper.click(loginButton);
+        }else if ("Email Radio Button".equals(elementName)) {
+            elementHelper.click(emailRadioButton);
+        }else if ("Phone Radio Button".equals(elementName)) {
+            elementHelper.click(phoneRadioButton);
         }
     }
 }
