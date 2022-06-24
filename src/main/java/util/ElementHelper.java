@@ -102,7 +102,6 @@ public class ElementHelper {
             try {
                 elements = presenceElements(key);
                 for (WebElement element : elements) {
-                    System.out.println(element.getText());
                     if (element.getText().contains(text)) {
                         desElement = element;
                         isFound = true;
@@ -215,7 +214,6 @@ public class ElementHelper {
         List<WebElement> elements = findElements(key);
 
         for (WebElement element : elements) {
-            System.out.println(element.getText());
             if (element.getText().contains(text)) {
                 element.click();
                 find = true;
@@ -229,16 +227,29 @@ public class ElementHelper {
      * @param key
      * @param text
      */
-    public void checkElementWithText(By key, String text) {
-        boolean find = false;
+    public boolean checkElementWithText(By key, String text) {
+        boolean isFound = false;
         List<WebElement> elements = findElements(key);
         for (WebElement element : elements) {
             if (element.getText().contains(text)) {
-                find = true;
+                isFound = true;
                 break;
             }
         }
-        Assert.assertEquals(true, find);
+        return isFound;
+    }
+
+    public boolean checkElementWithTextBool(By key, String text) {
+        boolean isFound = false;
+        List<WebElement> elements = findElements(key);
+        for (WebElement element : elements) {
+            if (element.getText().contains(text)) {
+                isFound = true;
+                break;
+            }
+        }
+        //Assert.assertEquals(true, find);
+        return isFound;
     }
 
     /**
