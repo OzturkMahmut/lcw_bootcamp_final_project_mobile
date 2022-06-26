@@ -11,7 +11,7 @@ Feature: Home Page
     When  User should see "MyCart" bottom navigation button
     When  User should see "Favorites" bottom navigation button
     When  User should see "Profile" bottom navigation button
-    Then should see "Anasayfa" selected navigation button
+    Then  User should see "Homepage" bottom navigation button selected
     Examples:
       | welcomeText |
       | Hoş geldin  |

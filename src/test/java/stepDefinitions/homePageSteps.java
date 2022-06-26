@@ -23,4 +23,9 @@ public class homePageSteps {
     public void shouldSeeBottomNavigationButton(String navBarButtonName) {
         homePage.checkNavBarButton(navBarButtonName);
     }
+
+    @Then("User should see {string} bottom navigation button selected")
+    public void userShouldSeeBottomNavigationButtonSelected(String navBarButtonName) {
+        homePage.isSelected(navBarButtonName);
+    }
 }

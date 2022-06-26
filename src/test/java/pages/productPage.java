@@ -3,10 +3,12 @@ package pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.ConfigReader;
 import util.ElementHelper;
 
+import java.util.List;
 import java.util.Properties;
 
 public class productPage {
@@ -18,11 +20,14 @@ public class productPage {
     By expandButton = By.id("com.lcwaikiki.android:id/scrollCardView");
     By productName = By.id("com.lcwaikiki.android:id/productTitleText");
     By productCode = By.id("com.lcwaikiki.android:id/modelCode");
-    By productPrice = new MobileBy.ByAndroidUIAutomator("resourceId(\"com.lcwaikiki.android:id/basketDiscountPrice\")");
+    By productPrice = By.id("com.lcwaikiki.android:id/price");
+    By productPriceDiscount = By.id("com.lcwaikiki.android:id/basketDiscountPrice");
     By addFavButton = By.id("com.lcwaikiki.android:id/productDetailFavorite");
     By shareButton = By.id("com.lcwaikiki.android:id/btnShareProduct");
     By addToCartButton = By.id("com.lcwaikiki.android:id/basket");
-    By sizeOptions = new MobileBy.ByAndroidUIAutomator("resourceId(\"com.lcwaikiki.android:id/productSizeText\")");
+    By sizeOptionsTexts = new MobileBy.ByAndroidUIAutomator("resourceId(\"com.lcwaikiki.android:id/productSizeText\")");
+    By sizeOptionCards = new MobileBy.ByAndroidUIAutomator("resourceId(\"com.lcwaikiki.android:id/productSizeCardView\")");
+
     By goToCartPopUp = By.id("com.lcwaikiki.android:id/contentAddedBasketSlide");
     By goToCartButton = new MobileBy.ByAndroidUIAutomator("new UiSelector().resourceId(\"com.lcwaikiki.android:id/slideDownMenu\").childSelector(new UiSelector().text(\"Sepete Git\"))");
 
@@ -59,6 +64,9 @@ public class productPage {
         }else if ("Product Name".equals(elementName)) {
             elementHelper.checkElementPresence(productName);
         }else if ("Product Price".equals(elementName)) {
+            if(!elementHelper.checkElementPresenceBool(productPrice)){
+                elementHelper.checkElementPresence(productPriceDiscount);
+            }
             elementHelper.checkElementPresence(productPrice);
         }else if ("Add Favorites Button".equals(elementName)) {
             elementHelper.checkElementPresence(addFavButton);
@@ -67,7 +75,7 @@ public class productPage {
         }else if ("AddToCart Button".equals(elementName)) {
             elementHelper.checkElementPresence(addToCartButton);
         }else if ("Size Options".equals(elementName)) {
-            elementHelper.checkElementPresence(sizeOptions);
+            elementHelper.checkElementPresence(sizeOptionsTexts);
         }else if ("GotoCart Pop Up".equals(elementName)) {
             elementHelper.checkElementPresence(goToCartPopUp);
         }
@@ -103,7 +111,7 @@ public class productPage {
             //size is saved in chooseSize method
 
         }else if ("Size Options".equals(elementName)) {
-            elementHelper.click(sizeOptions);
+            elementHelper.click(sizeOptionsTexts);
         }else if ("GotoCart Button".equals(elementName)) {
             elementHelper.click(goToCartButton);
         }
@@ -117,16 +125,35 @@ public class productPage {
      * @param size String
      */
     public void chooseSize(String size) {
+        int index = 0;
+        boolean isSelected = false;
+        List<WebElement> sizeCards = elementHelper.findElements(sizeOptionCards);
+        List<WebElement> sizeTexts = elementHelper.findElements(sizeOptionsTexts);
         //some products have a standard size so there won't be any other choice
-        if (!elementHelper.findElements(sizeOptions).get(0).getText().equals("Standart")){
+        if (!sizeTexts.get(0).getText().equals("Standart")){
             //some products has sizes in letters, some has in numbers, or maybe there is no product in preferred size
-            if (!elementHelper.checkElementWithTextBool(sizeOptions,size)){
-                elementHelper.findElements(sizeOptions).get(0).click(); //choose the first for no interruption to process
-                properties.setProperty("selectedProductSize",elementHelper.findElements(sizeOptions).get(0).getText());
-                System.out.println("Product has another type of size labeling, or preferred size is out of stock");
-            }else{ //product is available in desired size
-                elementHelper.clickElementWithText(sizeOptions,size);
-                properties.setProperty("selectedProductSize",size); //Storing the size info in config file
+            for (WebElement element: sizeCards)
+            {   //iterate through sizes to check if desired size is in stock, if so click
+                if(element.getAttribute("content-desc").equals("Stokta")){
+                    if(sizeTexts.get(index).getText().equals(size)){
+                        sizeTexts.get(index).click();
+                        properties.setProperty("selectedProductSize",sizeTexts.get(index).getText());
+                        isSelected = true;
+                    }
+                }
+                index += 1;
+            }
+            if(!isSelected){
+                for (WebElement element:sizeCards)
+                {   // if desired size is mot in stock, choose the first size in stock
+                    if(element.getAttribute("content-desc").equals("Stokta")){
+                        sizeTexts.get(index).click();
+                        properties.setProperty("selectedProductSize",sizeTexts.get(index).getText());
+                            isSelected = true;
+                            break;
+                    }
+                    index += 1;
+                }
             }
         }else{
             System.out.println("Product has a standard size. Therefore can not choose size: "+ size);

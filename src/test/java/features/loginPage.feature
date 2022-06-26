@@ -66,6 +66,8 @@ Feature: Login Page
     When  User fills out the "Email" input container with  "<emailInput>" in login page
     When  User fills out the "Password" input container with  "<passwordInput>" in login page
     When  User clicks "Login Button" element in login page
+    When  User clicks "Profile" bottom navigation button
+    When  User should see "<name>" text in "Full Name" element in profile page
     Examples:
-      | welcomeText |  loginFormTitle  | emailPlaceholder   | passwordPlaceholder  |emailInput  |passwordInput|
-      | Hoş geldin  |  GİRİŞ YAP       | E-Posta Adresiniz  | Şifreniz             |vba98041@zcrcd.com  |3ZxP9PEkn2tYQad|
+      | welcomeText |  loginFormTitle  | emailPlaceholder   | passwordPlaceholder  |emailInput  |passwordInput|name|
+      | Hoş geldin  |  GİRİŞ YAP       | E-Posta Adresiniz  | Şifreniz             |vba98041@zcrcd.com  |3ZxP9PEkn2tYQad|Ad Soyad|

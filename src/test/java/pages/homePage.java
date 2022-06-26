@@ -6,26 +6,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import util.ElementHelper;
 import java.util.regex.Pattern;
 
 public class homePage {
 
-    By emailForm= By.id("com.lcwaikiki.android:id/edtEmail");
-    By passForm= By.id("com.lcwaikiki.android:id/edtPassword");
-    By loginButton= By.id("com.lcwaikiki.android:id/buttonLogin");
-    By signupButton= By.id("com.lcwaikiki.android:id/registerNow");
-    By errorPopUp= By.id("com.lcwaikiki.android:id/slideDownText");
-    By emailError= By.id("com.lcwaikiki.android:id/errortextEmail");
-    By passwordError= By.id("com.lcwaikiki.android:id/errortextPassword");
-    By homePageTitle = By.id("com.lcwaikiki.android:id/txtWelcomeHeader");
-    By formTitle = By.id("com.lcwaikiki.android:id/headerLogin");
 
     By welcomeHeader = By.id("com.lcwaikiki.android:id/txtWelcomeHeader");
     By salesBannerView = By.id("com.lcwaikiki.android:id/bannerRecyclerView");
     By searchInputContainer = By.id("com.lcwaikiki.android:id/search");
     By searchIcon = By.id("com.lcwaikiki.android:id/searchIcon");
     By navBarButtons = By.id("com.lcwaikiki.android:id/tabView");
+    By navBarButtonsText = By.id("com.lcwaikiki.android:id/textItemTab");
+
 
     AppiumDriver driver;
     WebDriverWait wait;
@@ -46,7 +40,7 @@ public class homePage {
      */
     public void checkElementText(String text, String elementName) {
         if ("Welcome Header".equals(elementName)) {
-            elementHelper.checkElementWithText(welcomeHeader, text);
+            elementHelper.checkElementText(welcomeHeader, text);
         }
     }
 
@@ -76,16 +70,39 @@ public class homePage {
      */
     public void checkNavBarButton(String navBarButtonName) {
         if ("Homepage".equals(navBarButtonName)) {
-            elementHelper.checkElementWithText(navBarButtons,"Anasayfa");
+            elementHelper.checkElementWithText(navBarButtonsText,"Ana sayfa");
         } else if ("Categories".equals(navBarButtonName)) {
-            elementHelper.checkElementWithText(navBarButtons,"Kategoriler");
+            elementHelper.checkElementWithText(navBarButtonsText,"Kategoriler");
         } else if ("MyCart".equals(navBarButtonName)) {
-            elementHelper.checkElementWithText(navBarButtons,"Sepetim");
+            elementHelper.checkElementWithText(navBarButtonsText,"Sepetim");
         } else if ("Favorites".equals(navBarButtonName)) {
-            elementHelper.checkElementWithText(navBarButtons,"Favoriler");
+            elementHelper.checkElementWithText(navBarButtonsText,"Favoriler");
         } else if ("Profile".equals(navBarButtonName)) {
-            elementHelper.checkElementWithText(navBarButtons,"Profil");
+            elementHelper.checkElementWithText(navBarButtonsText,"Profil");
         }
+    }
+
+
+    /**
+     * check if given bottom navigation button is selected.
+     *
+     * @param navBarButtonName String
+     */
+    public void isSelected(String navBarButtonName) {
+        boolean isSelected = false;
+        if ("Homepage".equals(navBarButtonName)) {
+            isSelected = elementHelper.findElements(navBarButtons).get(0).getAttribute("selected").equals("true");
+        } else if ("Categories".equals(navBarButtonName)) {
+            isSelected = elementHelper.findElements(navBarButtons).get(0).getAttribute("selected").equals("true");
+        } else if ("MyCart".equals(navBarButtonName)) {
+            isSelected = elementHelper.findElements(navBarButtons).get(0).getAttribute("selected").equals("true");
+        } else if ("Favorites".equals(navBarButtonName)) {
+            isSelected = elementHelper.findElements(navBarButtons).get(0).getAttribute("selected").equals("true");
+        } else if ("Profile".equals(navBarButtonName)) {
+            isSelected = elementHelper.findElements(navBarButtons).get(0).getAttribute("selected").equals("true");
+
+        }
+        Assert.assertTrue(isSelected);
     }
 
 }

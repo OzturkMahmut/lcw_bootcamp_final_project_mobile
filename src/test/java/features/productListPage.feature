@@ -1,7 +1,7 @@
 @ProductListPage
 Feature: ProductList Page
 
-  @ChooseCategory @Filter @AddToCart
+  @ChooseCategory @Filter
   Scenario Outline: Choose Category and Filter Products
     Given User opens LcWaikiki App
     When  User clicks "Skip Button" element in tutorial page

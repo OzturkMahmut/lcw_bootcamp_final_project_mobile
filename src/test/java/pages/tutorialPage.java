@@ -22,10 +22,10 @@ import java.util.regex.Pattern;
 public class tutorialPage {
 
     By actionBarRoot = By.id("com.lcwaikiki.android:id/action_bar_root");
-    By discoverText = MobileBy.AndroidUIAutomator("com.lcwaikiki.android:id/textView");
-    By tvTutorials = MobileBy.AndroidUIAutomator("com.lcwaikiki.android:id/ivTutorial");
-    By newBotNavInfoTitle = MobileBy.AndroidUIAutomator("com.lcwaikiki.android:id/tvTitle");
-    By newBotNavInfo = MobileBy.AndroidUIAutomator("com.lcwaikiki.android:id/tvContent");
+    By discoverText = By.id("com.lcwaikiki.android:id/textView");
+    By tvTutorials = By.id("com.lcwaikiki.android:id/ivTutorial");
+    By newBotNavInfoTitle = By.id("com.lcwaikiki.android:id/tvTitle");
+    By newBotNavInfo = By.id("com.lcwaikiki.android:id/tvContent");
     By skipButton =By.id("com.lcwaikiki.android:id/tvNext");
 
 

@@ -196,6 +196,23 @@ public class ElementHelper {
     }
 
     /**
+     * check if the element is present on the DOM of a page
+     * does not throw an exception
+     * @param selector By
+     * @return boolean
+     */
+    public boolean checkElementPresenceBool(By selector) {
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(selector));
+            return true;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    /**
      * check if the title of a page is equals to the given text parameter
      *
      * @param text String
