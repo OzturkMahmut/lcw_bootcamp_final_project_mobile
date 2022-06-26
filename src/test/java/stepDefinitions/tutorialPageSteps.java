@@ -14,40 +14,13 @@ public class tutorialPageSteps {
         tutorialPage.isAppOpen();
     }
 
-    @Then("should see TvTutorials")
-    public void userShouldSeeTvTutorials() {
-        tutorialPage.checkTvTutorialsElement();
-    }
-
-    @Then("should see {string} text")
-    public void userShouldSeeText(String text) {
-        tutorialPage.checkText(text);
-    }
-
-    @Then("should see {string} title")
-    public void userShouldSeeTitle(String title) {
-        tutorialPage.checkTitle(title);
-    }
-
-    @Then("should see {string} title description")
-    public void userShouldSeeTitleDescription(String titleDesc) {
-        tutorialPage.checkTitleDescription(titleDesc);
-    }
-
-    @Then("should see {string} button")
-    public void userShouldSeeButton() {
-        tutorialPage.checkButton();
-    }
-
-    @When("drag and drop tutorial")
-    public void dragAndDropTutorial() {
-        tutorialPage.dragItem();
-    }
-
-
-
     @When("User clicks {string} element in tutorial page")
     public void clickElement(String elementName) {
         tutorialPage.clickElement(elementName);
+    }
+
+    @When("User should see {string} element in tutorial page")
+    public void shouldSeeElement(String elementName) {
+        tutorialPage.checkElement(elementName);
     }
 }

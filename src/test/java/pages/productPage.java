@@ -44,6 +44,11 @@ public class productPage {
 
     }
 
+    /**
+     * check if an element exist with the given elementName.
+     *
+     * @param elementName String
+     */
     public void checkElement(String elementName) {
         if ("Product Image".equals(elementName)) {
             elementHelper.checkElementPresence(productImage);
@@ -68,6 +73,11 @@ public class productPage {
         }
     }
 
+    /**
+     * click the element with the given string parameter
+     *
+     * @param elementName String
+     */
     public void clickElement(String elementName) {
         if ("Product Image".equals(elementName)) {
             elementHelper.click(productImage);
@@ -99,6 +109,13 @@ public class productPage {
         }
     }
 
+        //Todo: update
+    /**
+     * click the desired size and also store it in config file to check later on.
+     * if desired size is not available choose any size to continue the case
+     *
+     * @param size String
+     */
     public void chooseSize(String size) {
         //some products have a standard size so there won't be any other choice
         if (!elementHelper.findElements(sizeOptions).get(0).getText().equals("Standart")){

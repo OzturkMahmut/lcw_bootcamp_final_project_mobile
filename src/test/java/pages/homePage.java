@@ -30,7 +30,6 @@ public class homePage {
     AppiumDriver driver;
     WebDriverWait wait;
     ElementHelper elementHelper;
-    //Actions accc = new Actions(driver);hhh
 
     public homePage(AppiumDriver driver) {
         this.driver = driver;
@@ -38,13 +37,24 @@ public class homePage {
         this.elementHelper = new ElementHelper(driver);
     }
 
-
+    /**
+     * check if the visible text of the element with the given string parameter
+     * equals to the given parameter text
+     *
+     * @param text        String
+     * @param elementName String
+     */
     public void checkElementText(String text, String elementName) {
         if ("Welcome Header".equals(elementName)) {
             elementHelper.checkElementWithText(welcomeHeader, text);
         }
     }
 
+    /**
+     * click a navBar button with the given string parameter
+     *
+     * @param navBarButtonName String
+     */
     public void clickNavBarButton(String navBarButtonName) {
         if ("Homepage".equals(navBarButtonName)) {
             elementHelper.findElements(navBarButtons).get(0).click();

@@ -44,7 +44,11 @@ public class cartPage {
 
     }
 
-
+    /**
+     * check if an element exist with the given elementName.
+     *
+     * @param elementName String
+     */
     public void checkElement(String elementName) {
         WebElement element;
         boolean isSame = false;
@@ -92,6 +96,11 @@ public class cartPage {
         Assert.assertTrue(isSame);
     }
 
+    /**
+     * click the element given by its intuitive name
+     *
+     * @param elementName String
+     */
     public void clickElement(String elementName) {
         if ("Product Name".equals(elementName)) {
             elementHelper.click(productName);
@@ -112,6 +121,13 @@ public class cartPage {
         }
     }
 
+    /**
+     * check if the visible text of the element with the given string parameter
+     * equals to the given parameter text
+     *
+     * @param text        String
+     * @param elementName String
+     */
     public void checkElementText(String text, String elementName) {
         if ("Page Title".equals(elementName)) {
             elementHelper.checkElementTextContains(pageTitle, text);

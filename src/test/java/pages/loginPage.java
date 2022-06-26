@@ -50,12 +50,24 @@ public class loginPage {
         this.elementHelper = new ElementHelper(driver);
     }
 
+    /**
+     * check if the visible text of the element with the given string parameter
+     * equals to the given parameter text
+     *
+     * @param text        String
+     * @param elementName String
+     */
     public void checkElementText(String text, String elementName) {
         if ("Login Form Title".equals(elementName)) {
             elementHelper.checkElementWithText(loginFormTitle, text);
         }
     }
 
+    /**
+     * check if an element exist with the given elementName.
+     *
+     * @param elementName String
+     */
     public void checkElement(String elementName) {
         if ("Email Input Container".equals(elementName)) {
             elementHelper.checkElementPresence(emailInputContainer);
@@ -72,6 +84,11 @@ public class loginPage {
         }
     }
 
+    /**
+     * click the element with the given string parameter
+     *
+     * @param elementName String
+     */
     public void clickElement(String elementName)  {
         if ("Sign Up Button".equals(elementName)) {
             elementHelper.click(signupButton);
@@ -84,6 +101,12 @@ public class loginPage {
         }
     }
 
+    /**
+     * find the element(e.g. input container) and input the given text parameter
+     *
+     * @param inputContainer String
+     * @param input     String
+     */
     public void fillOutInputContainer(String inputContainer, String input) {
         if ("Email".equals(inputContainer)) {
             elementHelper.sendKey(emailInputContainer,input);

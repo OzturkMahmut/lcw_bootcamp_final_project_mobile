@@ -31,6 +31,11 @@ public class categoriesPage {
     }
 
 
+    /**
+     * click the element with the given string parameter
+     *
+     * @param elementName String
+     */
     public void clickElement(String elementName) {
         if ("Kadın".equals(elementName)) {
             elementHelper.clickElementWithText(userCategoryListBanner,elementName);
@@ -47,6 +52,13 @@ public class categoriesPage {
         }
     }
 
+    /**
+     * check if the visible text of the element with the given string parameter
+     * equals to the given parameter text
+     *
+     * @param text        String
+     * @param elementName String
+     */
     public void checkElementText(String text, String elementName) {
         if ("Page Title".equals(elementName)) {
             elementHelper.checkElementWithText(pageTitle, text);

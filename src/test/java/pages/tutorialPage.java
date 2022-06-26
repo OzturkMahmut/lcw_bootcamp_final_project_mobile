@@ -40,40 +40,50 @@ public class tutorialPage {
     }
 
 
+    /**
+     * check if the app is opened
+     *
+     */
     public void isAppOpen() {
         elementHelper.checkElementPresence(actionBarRoot);
     }
 
-    public void checkTvTutorialsElement() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(tvTutorials));
 
-    }
-
-    public void checkText(String text) {
-        wait.until(ExpectedConditions.textMatches(discoverText, Pattern.compile(text)));
-
-    }
-
-    public void checkTitle(String title) {
-        wait.until(ExpectedConditions.textMatches(newBotNavInfoTitle, Pattern.compile(title)));
-
-    }
-
-    public void checkTitleDescription(String titleDesc) {
-        wait.until(ExpectedConditions.textMatches(newBotNavInfo, Pattern.compile(titleDesc)));
-    }
-
-    public void checkButton() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(skipButton));
-    }
-
-    public void dragItem() {
-
-    }
-
+    /**
+     * click the element with the given string parameter
+     *
+     * @param elementName String
+     */
     public void clickElement(String elementName) {
         if ("Skip Button".equals(elementName)) {
             elementHelper.click(skipButton);
+        }else if ("Tv Tutorials".equals(elementName)) {
+            elementHelper.checkElementPresence(tvTutorials);
+        } else if ("Discover New Feature".equals(elementName)) {
+            elementHelper.checkElementPresence(discoverText);
+        }else if ("New Bottom NavBar Info Title".equals(elementName)) {
+            elementHelper.checkElementPresence(newBotNavInfoTitle);
+        } else if ("New Bottom NavBar Info".equals(elementName)) {
+            elementHelper.checkElementPresence(newBotNavInfo);
+        }
+    }
+
+    /**
+     * check if an element exist with the given elementName.
+     *
+     * @param elementName String
+     */
+    public void checkElement(String elementName) {
+        if ("Skip Button".equals(elementName)) {
+            elementHelper.checkElementPresence(skipButton);
+        }else if ("Tv Tutorials".equals(elementName)) {
+            elementHelper.checkElementPresence(tvTutorials);
+        } else if ("Discover New Feature".equals(elementName)) {
+            elementHelper.checkElementPresence(discoverText);
+        }else if ("New Bottom NavBar Info Title".equals(elementName)) {
+            elementHelper.checkElementPresence(newBotNavInfoTitle);
+        } else if ("New Bottom NavBar Info".equals(elementName)) {
+            elementHelper.checkElementPresence(newBotNavInfo);
         }
     }
 }
