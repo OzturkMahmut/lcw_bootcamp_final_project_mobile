@@ -29,7 +29,6 @@ Feature: Product Page
     When  User clicks the "AddToCart Button" element in product page
     Then  User should see "GotoCart Pop Up" element in product page
     When  User clicks the "GotoCart Button" element in product page
-
     Examples:
       | welcomeText|subCategory|category|categoriesPageTitle|filterPageTitle|filterType|filterValue|size|
       | Hoş geldin |Bluz       | Giyim  |Kategoriler        |FİLTRE         |Renk      |Siyah      |M |

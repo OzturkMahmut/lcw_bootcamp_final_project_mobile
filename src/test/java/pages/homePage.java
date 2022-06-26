@@ -68,4 +68,24 @@ public class homePage {
             elementHelper.findElements(navBarButtons).get(4).click();
         }
     }
+
+    /**
+     * check if bottom navigation button exist with the given name.
+     *
+     * @param navBarButtonName String
+     */
+    public void checkNavBarButton(String navBarButtonName) {
+        if ("Homepage".equals(navBarButtonName)) {
+            elementHelper.checkElementWithText(navBarButtons,"Anasayfa");
+        } else if ("Categories".equals(navBarButtonName)) {
+            elementHelper.checkElementWithText(navBarButtons,"Kategoriler");
+        } else if ("MyCart".equals(navBarButtonName)) {
+            elementHelper.checkElementWithText(navBarButtons,"Sepetim");
+        } else if ("Favorites".equals(navBarButtonName)) {
+            elementHelper.checkElementWithText(navBarButtons,"Favoriler");
+        } else if ("Profile".equals(navBarButtonName)) {
+            elementHelper.checkElementWithText(navBarButtons,"Profil");
+        }
+    }
+
 }

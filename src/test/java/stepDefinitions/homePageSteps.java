@@ -14,12 +14,13 @@ public class homePageSteps {
         homePage.checkElementText(text,elementName);
     }
 
-
     @When("User clicks {string} bottom navigation button")
     public void clickBottomNavigationButton(String navBarButtonName) {
         homePage.clickNavBarButton(navBarButtonName);
-
     }
 
-
+    @When("User should see {string} bottom navigation button")
+    public void shouldSeeBottomNavigationButton(String navBarButtonName) {
+        homePage.checkNavBarButton(navBarButtonName);
+    }
 }
