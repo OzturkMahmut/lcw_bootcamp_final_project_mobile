@@ -109,7 +109,7 @@ public class cartPage {
         }else if ("Product Size".equals(elementName)) {
             elementHelper.click(productSize);
         }else if ("Complete Order Button".equals(elementName)) {
-            elementHelper.click(productSize);
+            elementHelper.click(completeOrderButton);
         }else if ("Clear Basket Button".equals(elementName)) {
             elementHelper.click(clearBasketButton);
         }else if ("Apply Coupon Button".equals(elementName)) {

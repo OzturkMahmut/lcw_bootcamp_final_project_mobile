@@ -11,4 +11,5 @@ public class profilePageSteps {
     public void shouldSeeTextInElement(String text, String elementName) {
         profilePage.checkElementText(text,elementName);
     }
+
 }
