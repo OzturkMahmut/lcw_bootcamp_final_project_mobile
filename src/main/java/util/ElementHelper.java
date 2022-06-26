@@ -1,16 +1,12 @@
 package util;
 
-import com.sun.javafx.scene.traversal.Direction;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -23,30 +19,30 @@ public class ElementHelper {
     WebDriverWait wait;
     Actions action;
     TouchAction touchAction;
-    // TouchActions touchActions ;
 
     public ElementHelper(AppiumDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 10);
         this.action = new Actions(driver);
         this.touchAction = new TouchAction(driver);
-        //this.touchActions = new TouchActions(driver);
 
     }
 
     /**
-     * @param key
-     * @return
+     * find the element
+     *
+     * @param selector By
+     * @return element
      */
-    public WebElement findElement(By key) {
+    public WebElement findElement(By selector) {
         WebElement element = null;
         boolean endOfPage = false;
-        String previousPageSource = driver.getPageSource();
         // Algorithm to scroll to element
+        String previousPageSource = driver.getPageSource();
         while (!endOfPage) {//if we hit the end of the page, page source stays the same,thus algorithm stops
             // could be an issue for pages with infinite lists
             try {
-                element = presenceElement(key);
+                element = presenceElement(selector);
                 break;
 
             } catch (Exception e) {//if element is not found on the screen, we scroll
@@ -61,18 +57,20 @@ public class ElementHelper {
     }
 
     /**
-     * @param key
-     * @return
+     * find the elements of same type and return them in a list
+     *
+     * @param selector By
+     * @return elements
      */
-    public List<WebElement> findElements(By key) {
+    public List<WebElement> findElements(By selector) {
         List<WebElement> elements = null;
         boolean endOfPage = false;
-        String previousPageSource = driver.getPageSource();
         // Algorithm to scroll to element
+        String previousPageSource = driver.getPageSource();
         while (!endOfPage) {//if we hit the end of the page, page source stays the same,thus algorithm stops
             // could be an issue for pages with infinite lists
             try {
-                elements = presenceElements(key);
+                elements = presenceElements(selector);
                 break;
 
             } catch (Exception e) {//if element is not found on the screen, we scroll
@@ -87,20 +85,24 @@ public class ElementHelper {
     }
 
     /**
-     * @param key
-     * @return
+     * find an element in a vertical scrollable list with the given text parameter
+     * if the element is not visible on the screen, list is scrolled
+     * algorithm is not suitable for infinite lists
+     *
+     * @param selector By
+     * @param text     String
      */
-    public WebElement findElementInScrollableListWithText(By key,String text) {
+    public WebElement findElementInScrollableListWithText(By selector, String text) {
         List<WebElement> elements = null;
         WebElement desElement = null;
         boolean endOfPage = false;
         boolean isFound = false;
         String previousPageSource = driver.getPageSource();
         // Algorithm to scroll to element
-        while (!endOfPage&&!isFound) {//if we hit the end of the page, page source stays the same,thus algorithm stops
+        while (!endOfPage && !isFound) {//if we hit the end of the page, page source stays the same,thus algorithm stops
             // could be an issue for pages with infinite lists
             try {
-                elements = presenceElements(key);
+                elements = presenceElements(selector);
                 for (WebElement element : elements) {
                     if (element.getText().contains(text)) {
                         desElement = element;
@@ -113,7 +115,7 @@ public class ElementHelper {
             } catch (Exception e) {//if element is not found on the screen, we scroll
                 System.out.println(e);
             }
-            if (!isFound){
+            if (!isFound) {
                 swipe(Direction.UP);
             }
 
@@ -126,92 +128,115 @@ public class ElementHelper {
 
 
     /**
-     * @param key
-     * @return
+     * find and click an element in a vertical scrollable list with the given text parameter
+     * if the element is not visible on the screen, list is scrolled
+     * algorithm is not suitable for infinite lists
+     *
+     * @param selector By
+     * @param text     String
      */
-    public void clickElementInScrollableListWithText(By key,String text) {
-        findElementInScrollableListWithText(key,text).click();
+    public void clickElementInScrollableListWithText(By selector, String text) {
+        findElementInScrollableListWithText(selector, text).click();
     }
 
     /**
-     * @param key
+     * find the element and click it
+     *
+     * @param selector By
      */
-    public void click(By key) {
-        findElement(key).click();
+    public void click(By selector) {
+        findElement(selector).click();
     }
 
     /**
-     * @param key
-     * @param text
+     * find the element(e.g. input container) and input the given text parameter
+     *
+     * @param selector By
+     * @param text     String
      */
-    public void sendKey(By key, String text) {
-        findElement(key).sendKeys(text);
+    public void sendKey(By selector, String text) {
+        findElement(selector).sendKeys(text);
     }
 
     /**
-     * @param key
-     * @return
+     * find the element and get the visible text of this element
+     *
+     * @param selector By
      */
-    public String getText(By key) {
-        return findElement(key).getText();
+    public String getText(By selector) {
+        return findElement(selector).getText();
     }
 
     /**
-     * @param key
-     * @param text
-     * @return
+     * compare the visible text of the element with the given text parameter
+     *
+     * @param selector By
+     * @param text     String
      */
-    public boolean checkElementText(By key, String text) {
-        return wait.until(ExpectedConditions.textMatches(key, Pattern.compile(text)));
+    public boolean checkElementText(By selector, String text) {
+        return wait.until(ExpectedConditions.textMatches(selector, Pattern.compile(text)));
     }
 
     /**
-     * @param key
+     * check if the element is visible on screen
+     *
+     * @param selector By
      */
-    public void checkElementVisible(By key) {
-        wait.until(ExpectedConditions.visibilityOf(findElement(key)));
+    public void checkElementVisible(By selector) {
+        wait.until(ExpectedConditions.visibilityOf(findElement(selector)));
     }
 
     /**
-     * @param key
+     * check if the element is present on the DOM of a page
+     *
+     * @param selector By
      */
-    public void checkElementPresence(By key) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(key));
+    public void checkElementPresence(By selector) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(selector));
     }
 
     /**
-     * @param text
-     * @return
+     * check if the title of a page is equals to the given text parameter
+     *
+     * @param text String
      */
     public boolean checkTitle(String text) {
         return wait.until(ExpectedConditions.titleIs(text));
     }
 
     /**
-     * @param key
-     * @param attr
-     * @return
+     * Get the value of the given attribute of the element.
+     *
+     * @param selector By
+     * @param attr     String
+     * @return WebElement
      */
-    public String getAttribute(By key, String attr) {
-        return findElement(key).getAttribute(attr);
+    public String getAttribute(By selector, String attr) {
+        return findElement(selector).getAttribute(attr);
     }
 
     /**
-     * @param key
-     * @param attr
-     * @param text
+     * Get the value of the given attribute of the element and check
+     * if it is equal to the given parameter text
+     *
+     * @param selector By
+     * @param attr     String
+     * @param text     String
      */
-    public void checkAttribute(By key, String attr, String text) {
-        Assert.assertEquals(getAttribute(key, attr), text);
+    public void checkAttribute(By selector, String attr, String text) {
+        Assert.assertEquals(getAttribute(selector, attr), text);
     }
 
     /**
-     * @param key
-     * @param text
+     * find the elements of same type and click the element with
+     * the text matching the given text parameter
+     *
+     * @param selector By
+     * @param text     String
      */
-    public void clickElementWithText(By key, String text) {
+    public void clickElementWithText(By selector, String text) {
         boolean find = false;
-        List<WebElement> elements = findElements(key);
+        List<WebElement> elements = findElements(selector);
 
         for (WebElement element : elements) {
             if (element.getText().contains(text)) {
@@ -220,16 +245,19 @@ public class ElementHelper {
                 break;
             }
         }
-        Assert.assertEquals(true, find);
+        Assert.assertTrue(find);
     }
 
     /**
-     * @param key
-     * @param text
+     * find the elements of same type and check if an element with
+     * the text containing the given text parameter exists
+     *
+     * @param selector By
+     * @param text     String
      */
-    public boolean checkElementWithText(By key, String text) {
+    public boolean checkElementWithText(By selector, String text) {
         boolean isFound = false;
-        List<WebElement> elements = findElements(key);
+        List<WebElement> elements = findElements(selector);
         for (WebElement element : elements) {
             if (element.getText().contains(text)) {
                 isFound = true;
@@ -239,27 +267,40 @@ public class ElementHelper {
         return isFound;
     }
 
-    public boolean checkElementWithTextBool(By key, String text) {
+    /**
+     * find the elements of same type and check if an element with
+     * the text containing the given text parameter exists
+     * this method does not throw an exception if an element is not found
+     * but simply returns a boolean false
+     *
+     * @param selector By
+     * @param text     String
+     * @return boolean
+     */
+    public boolean checkElementWithTextBool(By selector, String text) {
         boolean isFound = false;
-        List<WebElement> elements = findElements(key);
+        List<WebElement> elements = findElements(selector);
         for (WebElement element : elements) {
             if (element.getText().contains(text)) {
                 isFound = true;
                 break;
             }
         }
-        //Assert.assertEquals(true, find);
         return isFound;
     }
 
     /**
-     * @param key
-     * @param text
-     * @param text2
+     * list the elements of same type and find the element with
+     * the text matching the given text parameter, then input the text
+     * given with the parameter text2
+     *
+     * @param selector By
+     * @param text     String
+     * @param text2    String
      */
-    public void sendKeyElementWithText(By key, String text, String text2) {
+    public void sendKeyElementWithText(By selector, String text, String text2) {
         boolean find = false;
-        List<WebElement> elements = findElements(key);
+        List<WebElement> elements = findElements(selector);
         for (WebElement element : elements) {
             if (element.getText().equals(text)) {
                 element.sendKeys(text2);
@@ -267,43 +308,58 @@ public class ElementHelper {
                 break;
             }
         }
-        Assert.assertEquals(true, find);
+        Assert.assertTrue(find);
     }
 
+    /**
+     * check if the visible text of the element contains the given text parameter
+     *
+     * @param selector By
+     * @param text     String
+     * @return boolean
+     */
     public boolean checkElementTextContains(By selector, String text) {
         boolean isFound = false;
         WebElement element = findElement(selector);
         if (element.getText().contains(text)) {
             isFound = true;
         }
-        Assert.assertEquals(true, isFound);
+        Assert.assertTrue(isFound);
         return isFound;
     }
 
-
     /**
-     * @param key
-     * @return
+     * check if the element is present on the DOM of a page
+     *
+     * @param selector By
+     * @return WebElement
      */
-    public WebElement presenceElement(By key) {
-        return wait.until(ExpectedConditions.presenceOfElementLocated(key));
+    public WebElement presenceElement(By selector) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(selector));
     }
 
     /**
-     * @param key
-     * @return
+     * check if the element list is present on the DOM of a page
+     *
+     * @param selector By
+     * @return WebElement list
      */
-    public List<WebElement> presenceElements(By key) {
-        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(key));
+    public List<WebElement> presenceElements(By selector) {
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(selector));
     }
 
+    /**
+     * carry out a swipe action from the center of the screen
+     * towards the given direction parameter
+     *
+     * @param dir Direction
+     */
     public void swipe(Direction dir) {
-        System.out.println("swipeScreen(): dir: '" + dir + "'"); // always log your actions
+        System.out.println("swipeScreen(): dir: '" + dir + "'");
 
         // Animation default time:
         //  - Android: 300 ms
         //  - iOS: 200 ms
-        // final value depends on your app and could be greater
         final int ANIMATION_TIME = 200; // ms
 
         final int PRESS_TIME = 200; // ms
@@ -321,8 +377,8 @@ public class ElementHelper {
             case DOWN: // center of footer
                 pointOptionEnd = PointOption.point(dims.width / 2, dims.height - edgeBorder);
                 break;
-            case UP: // center of header
-                pointOptionEnd = PointOption.point(dims.width / 2, edgeBorder/2);
+            case UP: // half the distance to center of header
+                pointOptionEnd = PointOption.point(dims.width / 2, edgeBorder / 2);
                 break;
             case LEFT: // center of left side
                 pointOptionEnd = PointOption.point(edgeBorder, dims.height / 2);
@@ -338,7 +394,7 @@ public class ElementHelper {
         try {
             new TouchAction(driver)
                     .press(pointOptionStart).waitAction()
-                        .moveTo(pointOptionEnd)
+                    .moveTo(pointOptionEnd)
                     .release().perform();
         } catch (Exception e) {
             System.err.println("swipeScreen(): TouchAction FAILED\n" + e.getMessage());
